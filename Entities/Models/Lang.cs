@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
-    public partial class Lang
+    public partial class Lang 
     {
         [Key]
         public int LangId { get; set; }
