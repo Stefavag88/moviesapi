@@ -10,8 +10,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq;
 using static Contracts.Constants;
 using DataObjects.ViewModels;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace MovieService
 {
@@ -148,7 +146,7 @@ namespace MovieService
 
                     foreach(var contrib in entry.Contribs)
                     {
-                        var containsContribType = contrib.Contribtypes.FirstOrDefault(c => c.ContribTypeId == contrib.Contribtypes[0]?.ContribTypeId) != null
+                        var containsContribType = contrib.Contribtypes.FirstOrDefault(c => c.ContribTypeId == contrib.Contribtypes[0]?.ContribTypeId) != null;
 
                         if (!containsContribType)
                             contrib.Contribtypes.Add(contrib.Contribtypes[0]);
@@ -159,12 +157,12 @@ namespace MovieService
             return dict.Values.ToList();
         }
 
-        private IQueryable<EntryViewModel> GetMovies(string langCode)
+        private IQueryable<EntryViewModel> GetMovies(string langCode, int? id = null)
         {
             var movies = from movie in _context.Movie
                          join langText in _context.Langtext on movie.MovieId equals langText.MovieId
                          join lang in _context.Lang on langText.LangId equals lang.LangId
-                         where lang.LangCode == langCode
+                         where (lang.LangCode == langCode && (id != null ? movie.MovieId == id : true))
                          select new EntryViewModel
                          {
                              Id = movie.MovieId,
@@ -176,12 +174,12 @@ namespace MovieService
             return movies;
         }
 
-        private IQueryable<EntryViewModel> GetContribs(string langCode)
+        private IQueryable<EntryViewModel> GetContribs(string langCode, int? id = null)
         {
             var contribs = from contrib in _context.Contrib
                            join langText in _context.Langtext on contrib.ContribId equals langText.ContribId
                            join lang in _context.Lang on langText.LangId equals lang.LangId
-                           where lang.LangCode == langCode
+                           where (lang.LangCode == langCode && (id != null ? contrib.ContribId == id : true))
                            select new EntryViewModel
                            {
                                Id = contrib.ContribId,
@@ -192,12 +190,12 @@ namespace MovieService
             return contribs;
         }
 
-        private IQueryable<EntryViewModel> GetContribTypes(string langCode)
+        private IQueryable<EntryViewModel> GetContribTypes(string langCode, int? id = null)
         {
             var contribTypes = from contribType in _context.Contribtype
                                join langText in _context.Langtext on contribType.ContribTypeId equals langText.ContribTypeId
                                join lang in _context.Lang on langText.LangId equals lang.LangId
-                               where lang.LangCode == langCode
+                               where (lang.LangCode == langCode && (id != null ? contribType.ContribTypeId == id : true))
                                select new EntryViewModel
                                {
                                    Id = contribType.ContribTypeId,
@@ -207,12 +205,12 @@ namespace MovieService
             return contribTypes;
         }
 
-        private IQueryable<EntryViewModel> GetGenres(string langCode)
+        private IQueryable<EntryViewModel> GetGenres(string langCode, int? id = null)
         {
             var genres = from genre in _context.Genre
                          join langText in _context.Langtext on genre.GenreId equals langText.GenreId
                          join lang in _context.Lang on langText.LangId equals lang.LangId
-                         where lang.LangCode == langCode
+                         where (lang.LangCode == langCode && (id != null ? genre.GenreId == id : true))
                          select new EntryViewModel
                          {
                              Id = genre.GenreId,
