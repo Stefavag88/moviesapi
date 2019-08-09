@@ -41,7 +41,6 @@ namespace MoviesAPI
                 var connectionString = Configuration.GetSection("MoviesDbConnection:connectionString").Value;
 
                 options
-                    .UseLazyLoadingProxies(true)
                     .UseSqlServer(connectionString);
             });
             services.AddSwaggerGen(swagger =>

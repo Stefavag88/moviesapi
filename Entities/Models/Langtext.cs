@@ -20,10 +20,10 @@ namespace Entities.Models
         public int? ContribId { get; set; }
         public int? ContribTypeId { get; set; }
 
-        public virtual Contrib Contrib { get; set; }
-        public virtual Contribtype ContribType { get; set; }
-        public virtual Genre Genre { get; set; }
-        public virtual Lang Lang { get; set; }
-        public virtual Movie Movie { get; set; }
+        public Contrib Contrib { get; set; }
+        public Contribtype ContribType { get; set; }
+        public Genre Genre { get; set; }
+        public Lang Lang { get; set; }
+        public Movie Movie { get; set; }
     }
 }

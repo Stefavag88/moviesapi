@@ -13,7 +13,7 @@ namespace Entities.Models
         [Required]
         public int GenreId { get; set; }
 
-        public virtual Genre Genre { get; set; }
-        public virtual Movie Movie { get; set; }
+        public Genre Genre { get; set; }
+        public Movie Movie { get; set; }
     }
 }

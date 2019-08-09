@@ -9,13 +9,13 @@ using Contracts;
 
 namespace MoviesAPI.Controllers
 {
-    [Route("api/contribs")]
+    [Route("api/contribtypes")]
     [ApiController]
-    public class ContribsController : ControllerBase
+    public class ContribTypesController : ControllerBase
     {
         private readonly IMovieService _service;
 
-        public ContribsController(IMovieService service)
+        public ContribTypesController(IMovieService service)
         {
             _service = service;
         }
@@ -23,10 +23,10 @@ namespace MoviesAPI.Controllers
         [HttpPost]
         [Produces("application/json", Type = typeof(TranslatedResponse))]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "CreateContributor")]
-        public async Task<IActionResult> CreateContributorAsync(IEnumerable<CreateContribRequest> requests)
+        [SwaggerOperation(OperationId = "CreateContributorType")]
+        public async Task<IActionResult> CreateContributorTypeAsync(IEnumerable<CreateContribtypeRequest> requests)
         {
-            var response = await _service.BatchInsertEntitiesAsync<Contrib>(requests, typeof(Contrib), "ContribId");
+            var response = await _service.BatchInsertEntitiesAsync<Contribtype>(requests, typeof(Contribtype), "ContribTypeId");
 
             return Ok(response);
         }

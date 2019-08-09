@@ -11,6 +11,6 @@ namespace Entities.Models
         [Required]
         public string LangCode { get; set; }
 
-        public virtual ICollection<Langtext> Langtext { get; set; }
+        public ICollection<Langtext> Langtext { get; set; }
     }
 }

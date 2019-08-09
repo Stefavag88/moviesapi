@@ -15,8 +15,9 @@ namespace Entities.Models
         [Required]
         public int ContribTypeId { get; set; }
 
-        public virtual Contrib Contrib { get; set; }
-        public virtual Contribtype ContribType { get; set; }
-        public virtual Movie Movie { get; set; }
+
+        public Contrib Contrib { get; set; }
+        public Contribtype ContribType { get; set; }
+        public Movie Movie { get; set; }
     }
 }

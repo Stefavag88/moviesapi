@@ -28,6 +28,11 @@ namespace Entities
            
         }
 
+        public DbSet<T> GetDbSet<T>() where T : class
+        {
+            return Set<T>();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Contrib>(entity =>
