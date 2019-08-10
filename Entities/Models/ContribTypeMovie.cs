@@ -15,7 +15,6 @@ namespace Entities.Models
         [Required]
         public int ContribTypeId { get; set; }
 
-
         public Contrib Contrib { get; set; }
         public Contribtype ContribType { get; set; }
         public Movie Movie { get; set; }

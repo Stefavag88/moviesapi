@@ -21,85 +21,12 @@ namespace MovieService
             _context = context;
         }
 
-        public async Task<CreateLanguageResponse> CreateLanguageAsync(CreateLanguageRequest request)
+        public IList<MovieViewModel> GetMovies(string langCode, int? id)
         {
-            var response = new CreateLanguageResponse();
-
-            await _context.Lang.AddAsync(new Lang { LangCode = request.LangCode.GetDescription() });
-            response.RowsAffected = await _context.SaveChangesAsync();
-
-            return response;
-        }
-
-        public async Task<ResponseBase> BatchInsertEntitiesAsync<TEntity>(IEnumerable<TranslatedRequest> requests, Type type, string idPropName)
-            where TEntity : BaseTranslateModel
-        {
-            var response = new ResponseBase();
-            EntityEntry<TEntity> insertedContributor = null;
-            EntityEntry<Langtext> insertedLangText = null;
-
-            foreach (var request in requests)
-            {
-                var langId = _context.Lang.FirstOrDefault(l => l.LangCode == request.LangCode.GetDescription())?.LangId;
-                string suffix = default;
-
-                if (!SuffixToPropertyMap.TryGetValue(idPropName, out suffix))
-                    response.ErrorMessage = $"BatchInsertOrUpdateEntitiesAsync:: Provided argument idPropName -> ${idPropName} is invalid";
-
-                //RECORD CREATION RULES
-                var langTextCode = $"{request.Name.ToUpperInvariant().Replace(" ", "_")}_{suffix}";
-
-                if (_context.ChangeTracker.Entries<TEntity>().FirstOrDefault(m => m.Entity.LangTextCode == langTextCode) == null)
-                {
-                    var instantiatedObject = Activator.CreateInstance(type, langTextCode) as TEntity;
-
-                    insertedContributor = await _context.GetDbSet<TEntity>().AddAsync(instantiatedObject);
-                }
-
-                var entityId = insertedContributor.Member(idPropName).CurrentValue;
-                var lngTextEntry = new Langtext
-                {
-                    TextCode = langTextCode,
-                    TextName = request.Name,
-                    TextTitle = request.Title,
-                    TextDescription = request.Description,
-                    LangId = langId.Value,
-                };
-
-                lngTextEntry.GetType().GetProperty(idPropName).SetValue(lngTextEntry, (int?)entityId);
-
-                insertedLangText = await _context.Langtext.AddAsync(lngTextEntry);
-            }
-
-            response.RowsAffected = await _context.SaveChangesAsync();
-
-            return await Task.FromResult(response);
-        }
-
-        public MovieViewModel GetMovieById(string langCode, int id)
-        {
-
-            var movies = from mov in _context.Movie
-                         join langText in _context.Langtext on mov.MovieId equals langText.MovieId
-                         join lang in _context.Lang on langText.LangId equals lang.LangId
-                         where (lang.LangCode == langCode && mov.MovieId == id)
-                         select new MovieViewModel
-                         {
-                             Id = mov.MovieId,
-                             Title = langText.TextTitle,
-                             LangCodeText = lang.LangCode
-                         };
-
-            return movies.FirstOrDefault();
-
-        }
-
-        public IEnumerable<object> GetAllMovies(string langCode)
-        {
-            var movies = GetMovies(langCode);
-            var genres = GetGenres(langCode);
-            var contribs = GetContribs(langCode);
-            var contribTypes = GetContribTypes(langCode);
+            var movies = GetMoviesText(langCode, id);         
+            var genres = GetGenresText(langCode);             
+            var contribs = GetContribsText(langCode);         
+            var contribTypes = GetContribTypesText(langCode); 
 
             var results = from ctm in _context.ContribTypeMovie
                           join mov in movies on ctm.MovieId equals mov.Id
@@ -113,13 +40,13 @@ namespace MovieService
                               Title = mov.Title,
                               LangCodeText = mov.LangCodeText,
                               MovieCode = mov.UniqueCode,
-                              Genres = matchedGenres.Select(m => new GenreViewModel { GenreId = m.Id, GenreTitle = m.Title }).ToList(),
+                              Genres = matchedGenres.Select(m => new GenreViewModel { Id = m.Id, Title = m.Title }).ToList(),
                               Contribs = matchedContribs.Select(m =>
                                 new ContribViewModel
                                 {
-                                    ContribId = m.Id,
-                                    ContribTitle = m.Title,
-                                    Contribtypes = matchedContribTypes.Select(c => new ContribtypeViewModel { ContribTypeId = c.Id, ContribTypeTitle = c.Title }).ToList()
+                                    Id = m.Id,
+                                    Title = m.Title,
+                                    Contribtypes = matchedContribTypes.Select(c => new ContribtypeViewModel { Id = c.Id, Title = c.Title }).ToList()
                                 }).ToList()
                           };
 
@@ -135,8 +62,8 @@ namespace MovieService
                 else
                 {
                     var entry = dict[res.MovieCode];
-                    var containsGenre = entry.Genres.FirstOrDefault(c => c.GenreId == res.Genres[0]?.GenreId) != null;
-                    var containsContrib = entry.Contribs.FirstOrDefault(c => c.ContribId == res.Contribs[0]?.ContribId) != null;
+                    var containsGenre = entry.Genres.FirstOrDefault(c => c.Id == res.Genres[0]?.Id) != null;
+                    var containsContrib = entry.Contribs.FirstOrDefault(c => c.Id == res.Contribs[0]?.Id) != null;
 
                     if (!containsGenre)
                         entry.Genres.Add(res.Genres[0]);
@@ -146,7 +73,7 @@ namespace MovieService
 
                     foreach(var contrib in entry.Contribs)
                     {
-                        var containsContribType = contrib.Contribtypes.FirstOrDefault(c => c.ContribTypeId == contrib.Contribtypes[0]?.ContribTypeId) != null;
+                        var containsContribType = contrib.Contribtypes.FirstOrDefault(c => c.Id == contrib.Contribtypes[0]?.Id) != null;
 
                         if (!containsContribType)
                             contrib.Contribtypes.Add(contrib.Contribtypes[0]);
@@ -157,7 +84,7 @@ namespace MovieService
             return dict.Values.ToList();
         }
 
-        private IQueryable<EntryViewModel> GetMovies(string langCode, int? id = null)
+        private IQueryable<EntryViewModel> GetMoviesText(string langCode, int? id = null)
         {
             var movies = from movie in _context.Movie
                          join langText in _context.Langtext on movie.MovieId equals langText.MovieId
@@ -174,7 +101,7 @@ namespace MovieService
             return movies;
         }
 
-        private IQueryable<EntryViewModel> GetContribs(string langCode, int? id = null)
+        private IQueryable<EntryViewModel> GetContribsText(string langCode, int? id = null)
         {
             var contribs = from contrib in _context.Contrib
                            join langText in _context.Langtext on contrib.ContribId equals langText.ContribId
@@ -184,13 +111,14 @@ namespace MovieService
                            {
                                Id = contrib.ContribId,
                                Title = langText.TextTitle,
-                               LangCodeText = lang.LangCode
+                               LangCodeText = lang.LangCode,
+                               UniqueCode = contrib.LangTextCode
                            };
 
             return contribs;
         }
 
-        private IQueryable<EntryViewModel> GetContribTypes(string langCode, int? id = null)
+        private IQueryable<EntryViewModel> GetContribTypesText(string langCode, int? id = null)
         {
             var contribTypes = from contribType in _context.Contribtype
                                join langText in _context.Langtext on contribType.ContribTypeId equals langText.ContribTypeId
@@ -200,12 +128,13 @@ namespace MovieService
                                {
                                    Id = contribType.ContribTypeId,
                                    Title = langText.TextTitle,
-                                   LangCodeText = lang.LangCode
+                                   LangCodeText = lang.LangCode,
+                                   UniqueCode = contribType.LangTextCode
                                };
             return contribTypes;
         }
 
-        private IQueryable<EntryViewModel> GetGenres(string langCode, int? id = null)
+        private IQueryable<EntryViewModel> GetGenresText(string langCode, int? id = null)
         {
             var genres = from genre in _context.Genre
                          join langText in _context.Langtext on genre.GenreId equals langText.GenreId
@@ -215,7 +144,8 @@ namespace MovieService
                          {
                              Id = genre.GenreId,
                              Title = langText.TextTitle,
-                             LangCodeText = lang.LangCode
+                             LangCodeText = lang.LangCode,
+                             UniqueCode = genre.LangTextCode
                          };
             return genres;
         }   

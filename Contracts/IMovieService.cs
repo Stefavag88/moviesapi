@@ -8,12 +8,6 @@ namespace Contracts
 {
     public interface IMovieService
     {
-        Task<CreateLanguageResponse> CreateLanguageAsync(CreateLanguageRequest request);
-
-        Task<ResponseBase> BatchInsertEntitiesAsync<TEntity>(IEnumerable<TranslatedRequest> requests, Type type, string idPropName) where TEntity : BaseTranslateModel;
-
-        MovieViewModel GetMovieById(string langCode, int id);
-
-        IEnumerable<object> GetAllMovies(string langCode);
+        IList<MovieViewModel> GetMovies(string langCode, int? id = null);
     }
 }

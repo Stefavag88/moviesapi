@@ -4,11 +4,9 @@ using System.Text;
 
 namespace DataObjects.ViewModels
 {
-    public class EntryViewModel
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string LangCodeText {get;set;}
+    public class EntryViewModel : TranslateViewmodel
+    {   
         public string UniqueCode { get; set; }
+        public string Name { get; set; }
     }
 }

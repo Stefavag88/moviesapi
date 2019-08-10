@@ -4,9 +4,7 @@ using System.Text;
 
 namespace DataObjects.ViewModels
 {
-    public class GenreViewModel
+    public class GenreViewModel : TranslateViewmodel
     {
-        public int GenreId { get; set; }
-        public string GenreTitle { get; set; }
     }
 }

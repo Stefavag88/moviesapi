@@ -4,9 +4,7 @@ using System.Text;
 
 namespace DataObjects.ViewModels
 {
-    public class ContribtypeViewModel
+    public class ContribtypeViewModel : TranslateViewmodel
     { 
-        public int ContribTypeId { get; set; }
-        public string ContribTypeTitle { get; set; }
     }
 }

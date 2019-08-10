@@ -4,14 +4,12 @@ using System.Text;
 
 namespace DataObjects.ViewModels
 {
-    public class ContribViewModel
+    public class ContribViewModel : TranslateViewmodel
     {
         public ContribViewModel()
         {
             Contribtypes = new List<ContribtypeViewModel>();
         }
-        public int ContribId { get; set; }
-        public string ContribTitle { get; set; }
         public List<ContribtypeViewModel> Contribtypes { get; set; }
     }
 }
