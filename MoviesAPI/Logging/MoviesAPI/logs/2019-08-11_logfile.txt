@@ -1,0 +1,222 @@
+2019-08-11 00:28:00.2457 INFO REQUEST :: https localhost:5001/swagger/index.html  
+2019-08-11 00:28:00.4712 INFO RESPONSE :: 200: <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swagger UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+  <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+  <style>
+    html
+    {
+      box-sizing: border-box;
+      overflow: -moz-scrollbars-vertical;
+      overflow-y: scroll;
+    }
+    *,
+    *:before,
+    *:after
+    {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin:0;
+      background: #fafafa;
+    }
+  </style>
+  
+</head>
+
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
+  <defs>
+    <symbol viewBox="0 0 20 20" id="unlocked">
+          <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"></path>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="locked">
+      <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8zM12 8H8V5.199C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="close">
+      <path d="M14.348 14.849c-.469.469-1.229.469-1.697 0L10 11.819l-2.651 3.029c-.469.469-1.229.469-1.697 0-.469-.469-.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-.469-.469-.469-1.228 0-1.697.469-.469 1.228-.469 1.697 0L10 8.183l2.651-3.031c.469-.469 1.228-.469 1.697 0 .469.469.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c.469.469.469 1.229 0 1.698z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="large-arrow">
+      <path d="M13.25 10L6.109 2.58c-.268-.27-.268-.707 0-.979.268-.27.701-.27.969 0l7.83 7.908c.268.271.268.709 0 .979l-7.83 7.908c-.268.271-.701.27-.969 0-.268-.269-.268-.707 0-.979L13.25 10z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="large-arrow-down">
+      <path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/>
+    </symbol>
+
+
+    <symbol viewBox="0 0 24 24" id="jump-to">
+      <path d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 24 24" id="expand">
+      <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+    </symbol>
+
+  </defs>
+</svg>
+
+<div id="swagger-ui"></div>
+
+<!-- Workaround for https://github.com/swagger-api/swagger-editor/issues/1371 -->
+<script>
+  if (window.navigator.userAgent.indexOf("Edge") > -1) {
+    console.log("Removing native Edge fetch in favor of swagger-ui's polyfill")
+    window.fetch = undefined;
+  }
+</script>
+
+<script src="./swagger-ui-bundle.js"> </script>
+<script src="./swagger-ui-standalone-preset.js"> </script>
+<script>
+  window.onload = function () {
+    var configObject = JSON.parse('{"urls":[{"url":"/swagger/v1/swagger.json","name":"Swagger Movies API"}],"deepLinking":false,"displayOperationId":false,"defaultModelsExpandDepth":1,"defaultModelExpandDepth":1,"defaultModelRendering":"example","displayRequestDuration":false,"docExpansion":"list","showExtensions":false,"showCommonExtensions":false,"supportedSubmitMethods":["get","put","post","delete","options","head","patch","trace"],"validatorUrl":null}');
+    var oauthConfigObject = JSON.parse('{"clientId":"clientId","clientSecret":"clientSecret","scopeSeperator":" ","useBasicAuthenticationWithAccessCodeGrant":false}');
+
+    // Apply mandatory parameters
+    configObject.dom_id = "#swagger-ui";
+    configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
+    configObject.layout = "StandaloneLayout";
+
+    // If oauth2RedirectUrl isn't specified, use the built-in default
+    if (!configObject.hasOwnProperty("oauth2RedirectUrl"))
+      configObject.oauth2RedirectUrl = window.location.href.replace("index.html", "oauth2-redirect.html");
+
+    // Build a system
+    const ui = SwaggerUIBundle(configObject);
+
+    // Apply OAuth config
+    ui.initOAuth(oauthConfigObject);
+  }
+</script>
+</body>
+
+</html>
+
+2019-08-11 00:28:01.2467 INFO REQUEST :: https localhost:5001/swagger/v1/swagger.json  
+2019-08-11 00:28:01.7702 INFO RESPONSE :: 200: {"swagger":"2.0","info":{"title":"Swagger Movies API"},"paths":{"/api/admin/createLanguage":{"post":{"tags":["Admin"],"summary":"Inserts new Language for text localization.","operationId":"CreateLanguageAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"lang","in":"body","required":false,"schema":{"$ref":"#/definitions/CreateLanguageRequest"}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/CreateLanguageResponse"}}}}},"/api/admin/batchInsertMovies":{"post":{"tags":["Admin"],"summary":"Inserts Movies for specified Languages in batch mode.","operationId":"CreateMovieAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateMovieRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/TranslatedResponse"}}}}},"/api/admin/batchInsertMoviesContributors":{"post":{"tags":["Admin"],"summary":"Inserts Contributors for specified Languages in batch mode.","operationId":"CreateContributor","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateContribRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/TranslatedResponse"}}}}},"/api/admin/batchInsertMoviesContributorTypes":{"post":{"tags":["Admin"],"summary":"Inserts Contributor Types for specified Languages in batch mode.","operationId":"CreateContributorType","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateContribtypeRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/TranslatedResponse"}}}}},"/api/admin/batchInsertMoviesGenres":{"post":{"tags":["Admin"],"summary":"Inserts Genres for specified Languages in batch mode.","operationId":"CreateGenreAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateGenreRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/TranslatedResponse"}}}}},"/api/admin/createContributorsTypesPerMovie":{"post":{"tags":["Admin"],"summary":"Creates association between already existing movie, contributor and contributor role in that movie.","operationId":"CreateContributorTypesPerMovieAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateContributorTypePerMovieRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/CreateContributorTypePerMovieResponse"}}}}},"/api/admin/createMovieGenreAssociation":{"post":{"tags":["Admin"],"summary":"Creates association between existing movie and genre.","operationId":"InsertMovieGenresAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateMovieGenreRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/CreateMovieGenreResponse"}}}}},"/api/movies":{"get":{"tags":["Movies"],"operationId":"GetAllMovies","consumes":[],"produces":["application/json"],"parameters":[{"name":"langCode","in":"query","required":false,"type":"string","enum":["en_US","el_GR","es_ES"]}],"responses":{"200":{"description":"Success","schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/MovieViewModel"}}}}}},"/api/movies/{langCode}/{movieId}":{"get":{"tags":["Movies"],"operationId":"GetAllMovieById","consumes":[],"produces":["application/json"],"parameters":[{"name":"langCode","in":"path","required":true,"type":"string","enum":["en_US","el_GR","es_ES"]},{"name":"movieId","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/MovieViewModel"}}}}}},"definitions":{"CreateLanguageRequest":{"type":"object","properties":{"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateLanguageResponse":{"type":"object","properties":{"rowsAffected":{"format":"int32","type":"integer"},"errorMessage":{"type":"string"}}},"CreateMovieRequest":{"type":"object","properties":{"name":{"type":"string"},"title":{"type":"string"},"description":{"type":"string"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"TranslatedResponse":{"type":"object","properties":{"rowsAffected":{"format":"int32","type":"integer"},"errorMessage":{"type":"string"}}},"CreateContribRequest":{"type":"object","properties":{"name":{"type":"string"},"title":{"type":"string"},"description":{"type":"string"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateContribtypeRequest":{"type":"object","properties":{"name":{"type":"string"},"title":{"type":"string"},"description":{"type":"string"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateGenreRequest":{"type":"object","properties":{"name":{"type":"string"},"title":{"type":"string"},"description":{"type":"string"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateContributorTypePerMovieRequest":{"type":"object","properties":{"movieId":{"format":"int32","type":"integer"},"contributorId":{"format":"int32","type":"integer"},"contribTypeId":{"format":"int32","type":"integer"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateContributorTypePerMovieResponse":{"type":"object","properties":{"rowsAffected":{"format":"int32","type":"integer"},"errorMessage":{"type":"string"}}},"CreateMovieGenreRequest":{"type":"object","properties":{"movieId":{"format":"int32","type":"integer"},"genreId":{"format":"int32","type":"integer"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateMovieGenreResponse":{"type":"object","properties":{"rowsAffected":{"format":"int32","type":"integer"},"errorMessage":{"type":"string"}}},"MovieViewModel":{"type":"object","properties":{"movieCode":{"type":"string"},"genres":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/GenreViewModel"}},"contribs":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/ContribViewModel"}},"id":{"format":"int32","type":"integer"},"title":{"type":"string"},"langCodeText":{"type":"string"}}},"GenreViewModel":{"type":"object","properties":{"id":{"format":"int32","type":"integer"},"title":{"type":"string"},"langCodeText":{"type":"string"}}},"ContribViewModel":{"type":"object","properties":{"contribtypes":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/ContribtypeViewModel"}},"id":{"format":"int32","type":"integer"},"title":{"type":"string"},"langCodeText":{"type":"string"}}},"ContribtypeViewModel":{"type":"object","properties":{"id":{"format":"int32","type":"integer"},"title":{"type":"string"},"langCodeText":{"type":"string"}}}},"tags":[]}
+2019-08-11 00:28:18.4386 INFO REQUEST :: https localhost:5001/api/movies ?langCode=es_ES 
+2019-08-11 00:28:24.1812 INFO RESPONSE :: 200: [{"movieCode":"MOONRISE_KINGDOM_MOVIE","genres":[{"id":1,"title":"Comedy (ES) ","langCodeText":null},{"id":2,"title":"Fantasy(ES) ","langCodeText":null}],"contribs":[{"contribtypes":[{"id":4,"title":"Director  (ES)","langCodeText":null}],"id":10,"title":"Wes Anderson (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":19,"title":"Bill Murray (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":29,"title":"Bruce Willis (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":2,"title":"Edward Norton (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":16,"title":"Tilda Swindon (ES) ","langCodeText":null}],"id":1,"title":"Moonrise Kingdom (ES)","langCodeText":"es-ES"},{"movieCode":"SEVEN_MOVIE","genres":[{"id":4,"title":"Drama(ES) ","langCodeText":null},{"id":5,"title":"Thriller(ES) ","langCodeText":null}],"contribs":[{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":13,"title":"Brad Pitt (ES) ","langCodeText":null},{"contribtypes":[{"id":4,"title":"Director  (ES)","langCodeText":null}],"id":4,"title":"David Fincher (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":38,"title":"Morgan Freeman (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":39,"title":"Gwineth Paltrow (ES) ","langCodeText":null}],"id":4,"title":"Seven (ES)","langCodeText":"es-ES"},{"movieCode":"FIGHT_CLUB_MOVIE","genres":[{"id":3,"title":"Action(ES) ","langCodeText":null},{"id":5,"title":"Thriller(ES) ","langCodeText":null}],"contribs":[{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":13,"title":"Brad Pitt (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":2,"title":"Edward Norton (ES) ","langCodeText":null},{"contribtypes":[{"id":4,"title":"Director  (ES)","langCodeText":null}],"id":4,"title":"David Fincher (ES) ","langCodeText":null}],"id":7,"title":"Fight Club(ES)","langCodeText":"es-ES"},{"movieCode":"BROKEN_FLOWERS_MOVIE","genres":[{"id":1,"title":"Comedy (ES) ","langCodeText":null}],"contribs":[{"contribtypes":[{"id":4,"title":"Director  (ES)","langCodeText":null}],"id":7,"title":"Jim Jarmush (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":19,"title":"Bill Murray (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":16,"title":"Tilda Swindon (ES) ","langCodeText":null}],"id":10,"title":"Broken Flowers(ES)","langCodeText":"es-ES"},{"movieCode":"THE_DEAD_DON'T_DIE_MOVIE","genres":[{"id":1,"title":"Comedy (ES) ","langCodeText":null},{"id":2,"title":"Fantasy(ES) ","langCodeText":null}],"contribs":[{"contribtypes":[{"id":4,"title":"Director  (ES)","langCodeText":null}],"id":7,"title":"Jim Jarmush (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":19,"title":"Bill Murray (ES) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor (ES)","langCodeText":null}],"id":16,"title":"Tilda Swindon (ES) ","langCodeText":null}],"id":13,"title":"The Dead Don't Die(ES)","langCodeText":"es-ES"},{"movieCode":"DOWN_BY_LAW_MOVIE","genres":[{"id":1,"title":"Comedy (ES) ","langCodeText":null}],"contribs":[{"contribtypes":[{"id":4,"title":"Director  (ES)","langCodeText":null}],"id":4,"title":"David Fincher (ES) ","langCodeText":null}],"id":16,"title":"Down By Law (ES)","langCodeText":"es-ES"}]
+2019-08-11 00:43:54.0591 INFO REQUEST :: https localhost:5001/swagger/index.html  
+2019-08-11 00:43:54.2279 INFO RESPONSE :: 200: <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swagger UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+  <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+  <style>
+    html
+    {
+      box-sizing: border-box;
+      overflow: -moz-scrollbars-vertical;
+      overflow-y: scroll;
+    }
+    *,
+    *:before,
+    *:after
+    {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin:0;
+      background: #fafafa;
+    }
+  </style>
+  
+</head>
+
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
+  <defs>
+    <symbol viewBox="0 0 20 20" id="unlocked">
+          <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"></path>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="locked">
+      <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8zM12 8H8V5.199C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="close">
+      <path d="M14.348 14.849c-.469.469-1.229.469-1.697 0L10 11.819l-2.651 3.029c-.469.469-1.229.469-1.697 0-.469-.469-.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-.469-.469-.469-1.228 0-1.697.469-.469 1.228-.469 1.697 0L10 8.183l2.651-3.031c.469-.469 1.228-.469 1.697 0 .469.469.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c.469.469.469 1.229 0 1.698z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="large-arrow">
+      <path d="M13.25 10L6.109 2.58c-.268-.27-.268-.707 0-.979.268-.27.701-.27.969 0l7.83 7.908c.268.271.268.709 0 .979l-7.83 7.908c-.268.271-.701.27-.969 0-.268-.269-.268-.707 0-.979L13.25 10z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="large-arrow-down">
+      <path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/>
+    </symbol>
+
+
+    <symbol viewBox="0 0 24 24" id="jump-to">
+      <path d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 24 24" id="expand">
+      <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+    </symbol>
+
+  </defs>
+</svg>
+
+<div id="swagger-ui"></div>
+
+<!-- Workaround for https://github.com/swagger-api/swagger-editor/issues/1371 -->
+<script>
+  if (window.navigator.userAgent.indexOf("Edge") > -1) {
+    console.log("Removing native Edge fetch in favor of swagger-ui's polyfill")
+    window.fetch = undefined;
+  }
+</script>
+
+<script src="./swagger-ui-bundle.js"> </script>
+<script src="./swagger-ui-standalone-preset.js"> </script>
+<script>
+  window.onload = function () {
+    var configObject = JSON.parse('{"urls":[{"url":"/swagger/v1/swagger.json","name":"Swagger Movies API"}],"deepLinking":false,"displayOperationId":false,"defaultModelsExpandDepth":1,"defaultModelExpandDepth":1,"defaultModelRendering":"example","displayRequestDuration":false,"docExpansion":"list","showExtensions":false,"showCommonExtensions":false,"supportedSubmitMethods":["get","put","post","delete","options","head","patch","trace"],"validatorUrl":null}');
+    var oauthConfigObject = JSON.parse('{"clientId":"clientId","clientSecret":"clientSecret","scopeSeperator":" ","useBasicAuthenticationWithAccessCodeGrant":false}');
+
+    // Apply mandatory parameters
+    configObject.dom_id = "#swagger-ui";
+    configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
+    configObject.layout = "StandaloneLayout";
+
+    // If oauth2RedirectUrl isn't specified, use the built-in default
+    if (!configObject.hasOwnProperty("oauth2RedirectUrl"))
+      configObject.oauth2RedirectUrl = window.location.href.replace("index.html", "oauth2-redirect.html");
+
+    // Build a system
+    const ui = SwaggerUIBundle(configObject);
+
+    // Apply OAuth config
+    ui.initOAuth(oauthConfigObject);
+  }
+</script>
+</body>
+
+</html>
+
+2019-08-11 00:43:54.6180 INFO REQUEST :: https localhost:5001/swagger/v1/swagger.json  
+2019-08-11 00:43:54.9597 INFO RESPONSE :: 200: {"swagger":"2.0","info":{"title":"Swagger Movies API"},"paths":{"/api/admin/createLanguage":{"post":{"tags":["Admin"],"summary":"Inserts new Language for text localization.","operationId":"CreateLanguageAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"lang","in":"body","required":false,"schema":{"$ref":"#/definitions/CreateLanguageRequest"}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/CreateLanguageResponse"}}}}},"/api/admin/batchInsertMovies":{"post":{"tags":["Admin"],"summary":"Inserts Movies for specified Languages in batch mode.","operationId":"CreateMovieAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateMovieRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/TranslatedResponse"}}}}},"/api/admin/batchInsertMoviesContributors":{"post":{"tags":["Admin"],"summary":"Inserts Contributors for specified Languages in batch mode.","operationId":"CreateContributor","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateContribRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/TranslatedResponse"}}}}},"/api/admin/batchInsertMoviesContributorTypes":{"post":{"tags":["Admin"],"summary":"Inserts Contributor Types for specified Languages in batch mode.","operationId":"CreateContributorType","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateContribtypeRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/TranslatedResponse"}}}}},"/api/admin/batchInsertMoviesGenres":{"post":{"tags":["Admin"],"summary":"Inserts Genres for specified Languages in batch mode.","operationId":"CreateGenreAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateGenreRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/TranslatedResponse"}}}}},"/api/admin/createContributorsTypesPerMovie":{"post":{"tags":["Admin"],"summary":"Creates association between already existing movie, contributor and contributor role in that movie.","operationId":"CreateContributorTypesPerMovieAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateContributorTypePerMovieRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/CreateContributorTypePerMovieResponse"}}}}},"/api/admin/createMovieGenreAssociation":{"post":{"tags":["Admin"],"summary":"Creates association between existing movie and genre.","operationId":"InsertMovieGenresAsync","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["application/json"],"parameters":[{"name":"requests","in":"body","required":false,"schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/CreateMovieGenreRequest"}}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/CreateMovieGenreResponse"}}}}},"/api/movies":{"get":{"tags":["Movies"],"operationId":"GetAllMovies","consumes":[],"produces":["application/json"],"parameters":[{"name":"langCode","in":"query","required":false,"type":"string","enum":["en_US","el_GR","es_ES"]}],"responses":{"200":{"description":"Success","schema":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/MovieViewModel"}}}}}},"/api/movies/{langCode}/{movieId}":{"get":{"tags":["Movies"],"operationId":"GetAllMovieById","consumes":[],"produces":["application/json"],"parameters":[{"name":"langCode","in":"path","required":true,"type":"string","enum":["en_US","el_GR","es_ES"]},{"name":"movieId","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/MovieViewModel"}}}}}},"definitions":{"CreateLanguageRequest":{"type":"object","properties":{"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateLanguageResponse":{"type":"object","properties":{"rowsAffected":{"format":"int32","type":"integer"},"errorMessage":{"type":"string"}}},"CreateMovieRequest":{"type":"object","properties":{"name":{"type":"string"},"title":{"type":"string"},"description":{"type":"string"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"TranslatedResponse":{"type":"object","properties":{"rowsAffected":{"format":"int32","type":"integer"},"errorMessage":{"type":"string"}}},"CreateContribRequest":{"type":"object","properties":{"name":{"type":"string"},"title":{"type":"string"},"description":{"type":"string"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateContribtypeRequest":{"type":"object","properties":{"name":{"type":"string"},"title":{"type":"string"},"description":{"type":"string"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateGenreRequest":{"type":"object","properties":{"name":{"type":"string"},"title":{"type":"string"},"description":{"type":"string"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateContributorTypePerMovieRequest":{"type":"object","properties":{"movieId":{"format":"int32","type":"integer"},"contributorId":{"format":"int32","type":"integer"},"contribTypeId":{"format":"int32","type":"integer"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateContributorTypePerMovieResponse":{"type":"object","properties":{"rowsAffected":{"format":"int32","type":"integer"},"errorMessage":{"type":"string"}}},"CreateMovieGenreRequest":{"type":"object","properties":{"movieId":{"format":"int32","type":"integer"},"genreId":{"format":"int32","type":"integer"},"langCode":{"enum":["en_US","el_GR","es_ES"],"type":"string"}}},"CreateMovieGenreResponse":{"type":"object","properties":{"rowsAffected":{"format":"int32","type":"integer"},"errorMessage":{"type":"string"}}},"MovieViewModel":{"type":"object","properties":{"movieCode":{"type":"string"},"genres":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/GenreViewModel"}},"contribs":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/ContribViewModel"}},"id":{"format":"int32","type":"integer"},"title":{"type":"string"},"langCodeText":{"type":"string"}}},"GenreViewModel":{"type":"object","properties":{"id":{"format":"int32","type":"integer"},"title":{"type":"string"},"langCodeText":{"type":"string"}}},"ContribViewModel":{"type":"object","properties":{"contribtypes":{"uniqueItems":false,"type":"array","items":{"$ref":"#/definitions/ContribtypeViewModel"}},"id":{"format":"int32","type":"integer"},"title":{"type":"string"},"langCodeText":{"type":"string"}}},"ContribtypeViewModel":{"type":"object","properties":{"id":{"format":"int32","type":"integer"},"title":{"type":"string"},"langCodeText":{"type":"string"}}}},"tags":[]}
+2019-08-11 00:44:06.3137 INFO REQUEST :: https localhost:5001/api/movies/el_GR/4  
+2019-08-11 00:44:13.3572 INFO RESPONSE :: 200: {"movieCode":"SEVEN_MOVIE","genres":[{"id":4,"title":"Drama(GR) ","langCodeText":null},{"id":5,"title":"Thriller(GR) ","langCodeText":null}],"contribs":[{"contribtypes":[{"id":1,"title":"Actor  (GR)","langCodeText":null}],"id":13,"title":"Brad Pitt (GR) ","langCodeText":null},{"contribtypes":[{"id":4,"title":"Director  (GR)","langCodeText":null}],"id":4,"title":"David Fincher (GR) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor  (GR)","langCodeText":null}],"id":38,"title":"Morgan Freeman (GR) ","langCodeText":null},{"contribtypes":[{"id":1,"title":"Actor  (GR)","langCodeText":null}],"id":39,"title":"Gwineth Paltrow ","langCodeText":null}],"id":4,"title":"Seven (GR)","langCodeText":"el-GR"}

@@ -12,14 +12,16 @@ using static Contracts.Constants;
 using DataObjects.ViewModels;
 
 namespace AdminService
+{
+    public class AdminService : IAdminService
     {
-        public class AdminService : IAdminService
+        private MoviesDBContext _context;
+        private ILoggerManager _loggerManager;
+        public AdminService(MoviesDBContext context, ILoggerManager loggerManager)
         {
-            private MoviesDBContext _context;
-            public AdminService(MoviesDBContext context)
-            {
-                _context = context;
-            }
+            _context = context;
+            _loggerManager = loggerManager;
+        }
 
         public async Task<CreateLanguageResponse> CreateLanguageAsync(CreateLanguageRequest request)
         {

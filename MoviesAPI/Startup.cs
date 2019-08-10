@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoviesAPI.Extensions;
+using MoviesAPI.Middleware;
 using NLog;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -74,6 +75,7 @@ namespace MoviesAPI
 
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
