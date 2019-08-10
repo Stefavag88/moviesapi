@@ -8,10 +8,12 @@ using Swashbuckle.AspNetCore.Annotations;
 using Contracts;
 using Extensions;
 using DataObjects.ViewModels;
+using System.Linq;
 
 namespace MoviesAPI.Controllers
 {
     [Route("api/movies")]
+    [Produces("application/json")]
     [ApiController]
     public class MoviesController : ControllerBase
     {
@@ -22,26 +24,24 @@ namespace MoviesAPI.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        [Produces("application/json", Type = typeof(TranslatedResponse))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "CreateMovie")]
-        public async Task<IActionResult> CreateMovieAsync(IEnumerable<CreateMovieRequest> requests)
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MovieViewModel>))]
+        [SwaggerOperation(OperationId = "GetAllMovies")]
+        public IActionResult GetAllMovies(LanguageEnum langCode)
         {
-            var response = await _service.BatchInsertEntitiesAsync<Movie>(requests, typeof(Movie), "MovieId");
-
-            return Ok(response);
-        }
-
-        [HttpGet]
-        [Produces("application/json", Type = typeof(IEnumerable<MovieViewModel>))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "GetMovie")]
-        public IActionResult GetMovie(LanguageEnum langCode, int? id)
-        {
-            var movies = _service.GetAllMovies(langCode.GetDescription());
+            var movies = _service.GetMovies(langCode.GetDescription());
 
             return Ok(movies);
+        }
+
+        [HttpGet("{langCode}/{movieId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MovieViewModel))]
+        [SwaggerOperation(OperationId = "GetAllMovieById")]
+        public IActionResult GetMovieById(LanguageEnum langCode, int movieId)
+        {
+            var movie = _service.GetMovies(langCode.GetDescription(), movieId).FirstOrDefault();
+
+            return Ok(movie);
         }
     }
 }

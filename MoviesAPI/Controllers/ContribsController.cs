@@ -13,22 +13,11 @@ namespace MoviesAPI.Controllers
     [ApiController]
     public class ContribsController : ControllerBase
     {
-        private readonly IMovieService _service;
 
-        public ContribsController(IMovieService service)
+        public ContribsController()
         {
-            _service = service;
         }
 
-        [HttpPost]
-        [Produces("application/json", Type = typeof(TranslatedResponse))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "CreateContributor")]
-        public async Task<IActionResult> CreateContributorAsync(IEnumerable<CreateContribRequest> requests)
-        {
-            var response = await _service.BatchInsertEntitiesAsync<Contrib>(requests, typeof(Contrib), "ContribId");
-
-            return Ok(response);
-        }
+       
     }
 }

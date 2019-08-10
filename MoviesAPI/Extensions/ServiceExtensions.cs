@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using AdminService;
+using Contracts;
 using Entities;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,11 @@ namespace MoviesAPI.Extensions
         public static void ConfigureMoviesService(this IServiceCollection services)
         {
             services.AddTransient<IMovieService, MovieService.MovieService>();
+        }
+
+        public static void ConfigureMAdminService(this IServiceCollection services)
+        {
+            services.AddTransient<IAdminService, AdminService.AdminService>();
         }
 
     }

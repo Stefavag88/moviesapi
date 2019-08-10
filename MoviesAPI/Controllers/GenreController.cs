@@ -13,24 +13,13 @@ namespace MoviesAPI.Controllers
     [ApiController]
     public class GenresController : ControllerBase
     {
-        private readonly IMovieService _service;
 
-        public GenresController(IMovieService service)
+
+        public GenresController()
         {
-            _service = service;
         }
 
-        [HttpPost]
-        [Produces("application/json", Type = typeof(TranslatedResponse))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "CreateGenreAsync")]
-        public async Task<IActionResult> CreateGenreAsync(IEnumerable<CreateGenreRequest> requests)
-        {
-            var response = await _service.BatchInsertEntitiesAsync<Genre>(requests, typeof(Genre), "GenreId");
-
-            return Ok(response);
-        }
-
+        
         //[HttpGet("/{id:int}")]
         //[Produces("application/json", Type = typeof(TranslatedResponse))]
         //[ProducesResponseType(StatusCodes.Status200OK)]
