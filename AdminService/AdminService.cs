@@ -43,7 +43,7 @@ namespace AdminService
             foreach (var request in requests)
             {
                 var langId = _context.Lang.FirstOrDefault(l => l.LangCode == request.LangCode.GetDescription())?.LangId;
-                string suffix = default;
+                string suffix = string.Empty;
 
                 if (!SuffixToPropertyMap.TryGetValue(idPropName, out suffix))
                     response.ErrorMessage = $"BatchInsertOrUpdateEntitiesAsync:: Provided argument idPropName -> ${idPropName} is invalid";
