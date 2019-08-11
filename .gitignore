@@ -21,6 +21,10 @@
 # Mono auto generated files
 #mono_crash.*
 
+#Log Files
+MoviesAPI/Logging/MoviesAPI/internal_logs/internallog.txt
+MoviesAPI/Logging/MoviesAPI/logs/*.txt
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
