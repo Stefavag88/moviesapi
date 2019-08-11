@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Logging\MoviesAPI\internal_logs\" />
+    <Folder Include="Logging\MoviesAPI\logs\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
