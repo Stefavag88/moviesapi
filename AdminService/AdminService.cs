@@ -23,11 +23,11 @@ namespace AdminService
             _loggerManager = loggerManager;
         }
 
-        public async Task<CreateLanguageResponse> CreateLanguageAsync(CreateLanguageRequest request)
+        public async Task<CreateLanguageResponse> CreateLanguageAsync(string langCodeDescription)
         {
             var response = new CreateLanguageResponse();
 
-            await _context.Lang.AddAsync(new Lang { LangCode = request.LangCode.GetDescription() });
+            await _context.Lang.AddAsync(new Lang { LangCode = langCodeDescription });
             response.RowsAffected = await _context.SaveChangesAsync();
 
             return response;

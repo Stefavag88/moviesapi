@@ -25,6 +25,9 @@
 MoviesAPI/Logging/MoviesAPI/internal_logs/internallog.txt
 MoviesAPI/Logging/MoviesAPI/logs/*.txt
 
+#appsettings.json (Added with initial settings but do not update except when removed from here)
+MoviesAPI/appsettings.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -43,6 +46,8 @@ bld/
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
+
+
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/

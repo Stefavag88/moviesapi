@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace MoviesAPI.Controllers
 {
-    [Route("api/movies")]
+    [Route("api/{langCode}/movies")]
     [Produces("application/json")]
     [ApiController]
     public class MoviesController : ControllerBase
@@ -34,7 +34,7 @@ namespace MoviesAPI.Controllers
             return Ok(movies);
         }
 
-        [HttpGet("{langCode}/{movieId}")]
+        [HttpGet("{movieId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MovieViewModel))]
         [SwaggerOperation(OperationId = "GetAllMovieById")]
         public IActionResult GetMovieById(LanguageEnum langCode, int movieId)

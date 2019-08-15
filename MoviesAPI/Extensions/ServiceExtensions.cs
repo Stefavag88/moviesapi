@@ -34,7 +34,7 @@ namespace MoviesAPI.Extensions
             services.AddTransient<IMovieService, MovieService.MovieService>();
         }
 
-        public static void ConfigureMAdminService(this IServiceCollection services)
+        public static void ConfigureAdminService(this IServiceCollection services)
         {
             services.AddTransient<IAdminService, AdminService.AdminService>();
         }

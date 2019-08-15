@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoviesAPI.Extensions;
 using MoviesAPI.Middleware;
+using Newtonsoft.Json.Serialization;
 using NLog;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -35,6 +36,7 @@ namespace MoviesAPI
             services.ConfigureCors();
             services.ConfigureLoggerService();
             services.ConfigureMoviesService();
+            services.ConfigureAdminService();
             services.AddDbContext<MoviesDBContext>(options =>
             {
                 var connectionString = Configuration.GetSection("MoviesDbConnection:connectionString").Value;
@@ -56,9 +58,10 @@ namespace MoviesAPI
             });
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                    .AddJsonOptions(options =>
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+                    .AddJsonOptions(options => {
+                        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                     });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +86,9 @@ namespace MoviesAPI
             });
             app.UseMvc(routes =>
             {
+                routes.MapRoute("admin", "{controller}/{action=Index}/{id?}", defaults: new { controller = "Admin" });
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
             });
 
         }

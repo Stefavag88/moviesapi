@@ -7,7 +7,7 @@ namespace Contracts
 {
     public interface IAdminService
     {
-        Task<CreateLanguageResponse> CreateLanguageAsync(CreateLanguageRequest request);
+        Task<CreateLanguageResponse> CreateLanguageAsync(string langCodeDescription);
 
         /// <summary>
         /// Insert to database a list of Entities of type TEntity

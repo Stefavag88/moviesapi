@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Contracts;
 using DataObjects;
+using static Contracts.Constants;
+using Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace MoviesAPI.Controllers
 {
@@ -16,7 +19,6 @@ namespace MoviesAPI.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private MoviesDBContext _context;
         private IAdminService _adminService;
 
         public AdminController(IAdminService adminService)
@@ -29,10 +31,21 @@ namespace MoviesAPI.Controllers
         /// </summary>
         [HttpPost("createLanguage")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateLanguageResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [SwaggerOperation(OperationId = "CreateLanguageAsync")]
         public async Task<IActionResult> CreateLanguageAsync(CreateLanguageRequest lang)
         {
-            var response = await _adminService.CreateLanguageAsync(lang);
+            string langCodeDescription = string.Empty;
+            try
+            {
+                langCodeDescription = lang.LangCode.GetDescription();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Language {lang.LangCode} not supported yet by Server");
+            }
+
+            var response = await _adminService.CreateLanguageAsync(langCodeDescription);
 
             return Ok(response);
         }
@@ -56,7 +69,7 @@ namespace MoviesAPI.Controllers
         [HttpPost("batchInsertMoviesContributors")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
         [SwaggerOperation(OperationId = "CreateContributor")]
-        public async Task<IActionResult> CreateContributorAsync(IEnumerable<CreateContribRequest> requests)
+        public async Task<IActionResult> CreateContributorAsync([FromBody] List<CreateContribRequest> requests)
         {
             var response = await _adminService.BatchInsertEntitiesAsync<Contrib>(requests, typeof(Contrib), "ContribId");
 

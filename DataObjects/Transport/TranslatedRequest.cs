@@ -1,4 +1,6 @@
-﻿namespace DataObjects
+﻿using Newtonsoft.Json;
+
+namespace DataObjects
 {
     public class TranslatedRequest : RequestBase
     {

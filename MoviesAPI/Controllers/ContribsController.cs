@@ -9,7 +9,7 @@ using Contracts;
 
 namespace MoviesAPI.Controllers
 {
-    [Route("api/contribs")]
+    [Route("api/{langCode}/contribs")]
     [ApiController]
     public class ContribsController : ControllerBase
     {
