@@ -23,7 +23,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet("{langCode}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TranslatedResponse>))]
         [SwaggerOperation(OperationId = "GetContributors")]
         public IActionResult Get(LanguageEnum langCode)
         {

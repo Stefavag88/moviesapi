@@ -105,5 +105,22 @@ namespace MoviesAPI.Controllers
 
             return NoContent();
         }
+
+        /// <summary>
+        /// Inserts or Updates the relationships between given movie and its contributors with their types.
+        /// </summary>
+        [HttpPut("{movieId}/contribs")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(OperationId = "SetMovieContribs")]
+        public IActionResult SetMovieContribs(int movieId, IEnumerable<ContribInfoRequest> contribAndTypeRequest)
+        {
+            var response = _service.SetMovieContribs(movieId, contribAndTypeRequest);
+
+            if (!response)
+                return BadRequest();
+
+            return NoContent();
+        }
     }
 }

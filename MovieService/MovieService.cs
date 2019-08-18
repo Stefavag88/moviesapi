@@ -279,6 +279,31 @@ namespace MovieService
             return true;
         }
 
+        public bool SetMovieContribs(int movieId, IEnumerable<ContribInfoRequest> contribInfoRequests)
+        {
+            var contribTypeMovieRecords = _context.ContribTypeMovie.Where(m => m.MovieId == movieId);
+            var insertedRecords = contribInfoRequests.Select(c => new ContribTypeMovie
+            {
+                MovieId = movieId,
+                ContribId = c.ContribId, 
+                ContribTypeId = c.ContribtypeId
+            });
+
+            _context.ContribTypeMovie.RemoveRange(contribTypeMovieRecords);
+            _context.AddRange(insertedRecords);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private IQueryable<EntryViewModel> GetMoviesText(string langCode, int? id = null)
         {
             var movies = from movie in _context.Movie

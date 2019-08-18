@@ -29,5 +29,7 @@ namespace Contracts
         bool DeleteContribtypeById(int id);
 
         bool SetMovieGenres(int moviedId, IEnumerable<int> genreIds);
+
+        bool SetMovieContribs(int movieId, IEnumerable<ContribInfoRequest> contribInfoRequests);
     }
 }

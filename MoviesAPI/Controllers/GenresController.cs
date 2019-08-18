@@ -26,7 +26,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet("{langCode}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TranslatedResponse>))]
         [SwaggerOperation(OperationId = "GetGenres")]
         public IActionResult Get(LanguageEnum langCode)
         {
@@ -36,7 +36,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet("{langCode}/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TranslatedResponse>))]
         [SwaggerOperation(OperationId = "GetGenreById")]
         public IActionResult Get(LanguageEnum langCode, int id)
         {

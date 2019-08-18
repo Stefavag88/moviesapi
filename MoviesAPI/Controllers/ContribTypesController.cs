@@ -4,6 +4,7 @@ using DataObjects;
 using Swashbuckle.AspNetCore.Annotations;
 using Contracts;
 using Extensions;
+using System.Collections.Generic;
 
 namespace MoviesAPI.Controllers
 {
@@ -20,7 +21,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet("{langCode}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TranslatedResponse>))]
         [SwaggerOperation(OperationId = "GetContributorsTypes")]
         public IActionResult Get(LanguageEnum langCode)
         {
