@@ -22,7 +22,7 @@ namespace MoviesAPI.Controllers
             _service = service;
         }
 
-        [HttpGet("{langCode}/{id}")]
+        [HttpGet("{langCode}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
         [SwaggerOperation(OperationId = "GetContributors")]
         public IActionResult Get(LanguageEnum langCode)

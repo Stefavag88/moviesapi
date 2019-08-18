@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Entities.Models;
 using DataObjects;
 using Swashbuckle.AspNetCore.Annotations;
 using Contracts;
@@ -22,7 +19,7 @@ namespace MoviesAPI.Controllers
             _service = service;
         }
 
-        [HttpGet("{langCode}/{id}")]
+        [HttpGet("{langCode}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
         [SwaggerOperation(OperationId = "GetContributorsTypes")]
         public IActionResult Get(LanguageEnum langCode)
