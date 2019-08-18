@@ -8,8 +8,8 @@ ASP .NET Core 2.1 WebAPI with Swagger UI
  **To Run:**
   1. Download or clone the project 
   2. Open SQL Server Mgmt Studio on (localDB)/MSSQLLocalDB (or other preferred instance of localDB) and run steps 3 & 4.
-  3. Run the Create_Scripts.sql to create the database and tables. 
-  4. Run the PopulateTables_Scripts.sql to populate the database with tested data.
+  3. Right-Click on Databases > Import Data-Tier Application and import the .bacpac file in /DB folder.
+  4. Database Name should be MOVIES_DB_V3
   5. If you created the project at a different instance of localDB than MSSQLLocalDB, then change the value of key "MoviesDbConnection.connectionString"
   inside MoviesAPI/appsettings.json appropriately. 
   6. Make sure that MoviesAPI is set as Startup Project. 
@@ -22,9 +22,6 @@ ASP .NET Core 2.1 WebAPI with Swagger UI
 - Database Interaction is implemented with Entity Framework Core, with Lazy-Loading deactivated.
 - Http Request/Response Logging. 
 - Swagger Integration.
-
-***Database design specs: ***
-The database consists of 
 
 
 ***Remarks***
