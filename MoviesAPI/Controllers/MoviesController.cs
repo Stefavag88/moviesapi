@@ -9,10 +9,12 @@ using Contracts;
 using Extensions;
 using DataObjects.ViewModels;
 using System.Linq;
+using DataObjects.Transport;
+using System;
 
 namespace MoviesAPI.Controllers
 {
-    [Route("api/{langCode}/movies")]
+    [Route("api/movies")]
     [Produces("application/json")]
     [ApiController]
     public class MoviesController : ControllerBase
@@ -24,7 +26,7 @@ namespace MoviesAPI.Controllers
             _service = service;
         }
 
-        [HttpGet()]
+        [HttpGet("{langCode}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MovieViewModel>))]
         [SwaggerOperation(OperationId = "GetAllMovies")]
         public IActionResult GetAllMovies(LanguageEnum langCode)
@@ -34,14 +36,57 @@ namespace MoviesAPI.Controllers
             return Ok(movies);
         }
 
-        [HttpGet("{movieId}")]
+        [HttpGet("{langCode}/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MovieViewModel))]
-        [SwaggerOperation(OperationId = "GetAllMovieById")]
-        public IActionResult GetMovieById(LanguageEnum langCode, int movieId)
+        [SwaggerOperation(OperationId = "GetMovieById")]
+        public IActionResult GetMovieById(LanguageEnum langCode, int id)
         {
-            var movie = _service.GetMovies(langCode.GetDescription(), movieId).FirstOrDefault();
+            var movie = _service.GetMovies(langCode.GetDescription(), id).FirstOrDefault();
 
             return Ok(movie);
+        }
+
+        /// <summary>
+        /// Physical Delete of a movie in all languages.
+        /// </summary>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
+        [SwaggerOperation(OperationId = "DeleteMovieById")]
+        public IActionResult Delete(int id)
+        {
+            var response = _service.DeleteMovieById(id);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Physical Delete of a movie's info in specified Langugage.Does not delete movie record
+        /// </summary>
+        [HttpDelete("{langCode}/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
+        [SwaggerOperation(OperationId = "DeleteMovieByIdAndLang")]
+        public IActionResult Delete(LanguageEnum langCode, int id)
+        {
+            var response = _service.DeleteMovieById(id, langCode.GetDescription());
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Creates a movie record and Language Translations for requested languages. English language is default and Mandatory.
+        /// </summary>
+        [HttpPost()]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(OperationId = "CreateMovie")]
+        public IActionResult Create(TranslatableRequest request)
+        {
+            var response = _service.CreateMovie(request);
+
+            if (!response.success)
+                return BadRequest();
+
+            return Created(new Uri($"movies/{response.createdovieId}", UriKind.Relative), response.createdovieId);
         }
     }
 }
