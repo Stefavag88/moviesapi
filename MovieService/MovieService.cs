@@ -30,25 +30,27 @@ namespace MovieService
             var contribs = GetContribsText(langCode);
             var contribTypes = GetContribTypesText(langCode);
 
-            var results = from ctm in _context.ContribTypeMovie
-                          join mov in movies on ctm.MovieId equals mov.Id
+            var results = from mov in movies
+                          join mg in _context.MovieGenre on mov.Id equals mg.MovieId into movieGenres
+                          from movieGenre in movieGenres.DefaultIfEmpty()
+                          join gen in genres on movieGenre.GenreId equals gen.Id into matchedGenres
+                          from ctm in _context.ContribTypeMovie where ctm.MovieId == mov.Id
+                          join movie in movies on ctm.MovieId equals movie.Id 
                           join con in contribs on ctm.ContribId equals con.Id into matchedContribs
                           join conT in contribTypes on ctm.ContribTypeId equals conT.Id into matchedContribTypes
-                          join mg in _context.MovieGenre on ctm.MovieId equals mg.MovieId
-                          join gen in genres on mg.GenreId equals gen.Id into matchedGenres
                           select new MovieViewModel
                           {
                               Id = ctm.MovieId,
                               Title = mov.Title,
                               LangCodeText = mov.LangCodeText,
                               MovieCode = mov.UniqueCode,
-                              Genres = matchedGenres.Select(m => new GenreViewModel { Id = m.Id, Title = m.Title }).ToList(),
-                              Contribs = matchedContribs.Select(m =>
+                              Genres = matchedGenres.DefaultIfEmpty().Select(m => new GenreViewModel { Id = m.Id, Title = m.Title }).ToList(),
+                              Contribs = matchedContribs.DefaultIfEmpty().Select(m =>
                                 new ContribViewModel
                                 {
                                     Id = m.Id,
                                     Title = m.Title,
-                                    Contribtypes = matchedContribTypes.Select(c => new ContribtypeViewModel { Id = c.Id, Title = c.Title }).ToList()
+                                    Contribtypes = matchedContribTypes.DefaultIfEmpty().Select(c => new ContribtypeViewModel { Id = c.Id, Title = c.Title }).ToList()
                                 }).ToList()
                           };
 
@@ -89,6 +91,16 @@ namespace MovieService
         public IList<EntryViewModel> GetGenres(string langCode, int? id)
         {
             return GetGenresText(langCode, id).ToList();
+        }
+
+        public IList<EntryViewModel> GetContribs(string langCode, int? id = null)
+        {
+            return GetContribsText(langCode, id).ToList();
+        }
+
+        public IList<EntryViewModel> GetContribtypes(string langCode, int? id = null)
+        {
+            return GetContribTypesText(langCode, id).ToList();
         }
 
         public bool DeleteGenreById(int id)
@@ -192,6 +204,81 @@ namespace MovieService
             return true;
         }
 
+        public (bool success, int? createdovieId) CreateMovie(TranslatableRequest request)
+        {
+            EntityEntry<Movie> createdMovie;
+
+            try
+            {
+                var movieLangText = $"{request.Title.ToUpperInvariant().Replace(" ", "_")}_MOVIE";
+
+                createdMovie = _context.Movie.Add(new Movie
+                {
+                    LangTextCode = movieLangText
+                });
+
+                var translations = request.Translations.Select(tr =>
+                {
+                    var langId = _context.Lang.FirstOrDefault(l => l.LangCode == tr.LangCode)?.LangId;
+
+                    if (!langId.HasValue)
+                        throw new ArgumentException($"Invalid LangCode {tr.LangCode}");
+
+                    return new Langtext
+                    {
+                        TextCode = movieLangText,
+                        LangId = langId.Value,
+                        TextName = request.Title,
+                        TextTitle = tr.Title,
+                        TextDescription = tr.Description,
+                        MovieId = createdMovie.Entity.MovieId
+                    };
+                }
+               ).ToList();
+
+                var defaultEnglishRecord = new Langtext
+                {
+                    TextCode = movieLangText,
+                    LangId = _context.Lang.First(l => l.LangCode == LanguageEnum.en_US.GetDescription()).LangId,
+                    TextName = request.Title,
+                    TextTitle = request.Title,
+                    TextDescription = request.Description,
+                    MovieId = createdMovie.Entity.MovieId
+                };
+
+                translations.Add(defaultEnglishRecord);
+
+                _context.AddRange(translations);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return (false, null);
+            }
+
+            return (true, createdMovie.Entity.MovieId);
+        }
+
+        public bool SetMovieGenres(int movieId, IEnumerable<int> genreIds)
+        {
+            var movieGenreRecords = _context.MovieGenre.Where(m => m.MovieId == movieId).ToList();
+            var insertedRecords = genreIds.Select(id => new MovieGenre { MovieId = movieId, GenreId = id });
+
+            _context.MovieGenre.RemoveRange(movieGenreRecords);
+            _context.MovieGenre.AddRange(insertedRecords);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private IQueryable<EntryViewModel> GetMoviesText(string langCode, int? id = null)
         {
             var movies = from movie in _context.Movie
@@ -256,61 +343,6 @@ namespace MovieService
                              UniqueCode = genre.LangTextCode
                          };
             return genres;
-        }
-
-        public (bool success, int? createdovieId) CreateMovie(TranslatableRequest request)
-        {
-            EntityEntry<Movie> createdMovie;
-
-            try
-            {
-                var movieLangText = $"{request.Title.ToUpperInvariant().Replace(" ", "_")}_MOVIE";
-
-                createdMovie = _context.Movie.Add(new Movie
-                {
-                    LangTextCode = movieLangText
-                });
-
-                var translations = request.Translations.Select(tr =>
-                {
-                    var langId = _context.Lang.FirstOrDefault(l => l.LangCode == tr.LangCode)?.LangId;
-
-                    if (!langId.HasValue)
-                        throw new ArgumentException($"Invalid LangCode {tr.LangCode}");
-
-                    return new Langtext
-                    {
-                        TextCode = movieLangText,
-                        LangId = langId.Value,
-                        TextName = request.Title,
-                        TextTitle = tr.Title,
-                        TextDescription = tr.Description,
-                        MovieId = createdMovie.Entity.MovieId
-                    };
-                }
-               ).ToList();
-
-                var defaultEnglishRecord = new Langtext
-                {
-                    TextCode = movieLangText,
-                    LangId = _context.Lang.First(l => l.LangCode == LanguageEnum.en_US.GetDescription()).LangId,
-                    TextName = request.Title,
-                    TextTitle = request.Title,
-                    TextDescription = request.Description,
-                    MovieId = createdMovie.Entity.MovieId
-                };
-
-                translations.Add(defaultEnglishRecord);
-
-                _context.AddRange(translations);
-                _context.SaveChanges();
-            }
-            catch (Exception)
-            {
-                return (false, null);
-            }
-
-            return (true, createdMovie.Entity.MovieId);
         }
     }
 }

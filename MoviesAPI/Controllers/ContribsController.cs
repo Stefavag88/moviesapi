@@ -6,18 +6,31 @@ using Entities.Models;
 using DataObjects;
 using Swashbuckle.AspNetCore.Annotations;
 using Contracts;
+using Extensions;
 
 namespace MoviesAPI.Controllers
 {
-    [Route("api/{langCode}/contribs")]
+    [Route("api/contribs")]
+    [Produces("application/json")]
     [ApiController]
     public class ContribsController : ControllerBase
     {
+        private IMovieService _service;
 
-        public ContribsController()
+        public ContribsController(IMovieService service)
         {
+            _service = service;
         }
 
-       
+        [HttpGet("{langCode}/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TranslatedResponse))]
+        [SwaggerOperation(OperationId = "GetContributors")]
+        public IActionResult Get(LanguageEnum langCode)
+        {
+            var response = _service.GetContribs(langCode.GetDescription());
+
+            return Ok(response);
+        }
+
     }
 }

@@ -88,5 +88,22 @@ namespace MoviesAPI.Controllers
 
             return Created(new Uri($"movies/{response.createdovieId}", UriKind.Relative), response.createdovieId);
         }
+
+        /// <summary>
+        /// Inserts or Updates the relationships between given movie and its genres.
+        /// </summary>
+        [HttpPut("{movieId}/genres")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(OperationId = "SetMovieGenres")]
+        public IActionResult SetMovieGenres(int movieId, IEnumerable<int> genreIds)
+        {
+            var response = _service.SetMovieGenres(movieId, genreIds);
+
+            if (!response)
+                return BadRequest();
+
+            return NoContent();
+        }
     }
 }
